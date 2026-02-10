@@ -16,7 +16,7 @@
 /**
  * A class that models each Player in the game. Players have an identifier, which should be unique.
  */
-public abstract class Players {
+public abstract class Player {
 
 
     private String name; //the unique name for this player
@@ -26,7 +26,7 @@ public abstract class Players {
      *
      * @param name the unique ID to assign to this player.
      */
-    public Players(String name) {
+    public Player(String name) {
         this.name = name;
     }
 

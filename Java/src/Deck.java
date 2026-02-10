@@ -20,7 +20,7 @@ import java.util.Collections;
   * A concrete class that represents any grouping of cards for a Game. might want to subclass this more than
  * once. The group of cards has a maximum size attribute which is flexible for reuse.
  */
-public class GroupOfCards {
+public class Deck {
     
     
 
@@ -29,7 +29,7 @@ public class GroupOfCards {
     private ArrayList<Card> cards;
     private int size;//the size of the grouping
 
-    public GroupOfCards(int size) {
+    public Deck(int size) {
         this.size = size;
     }
 
