@@ -7,7 +7,7 @@
  *
  * @author Inder Partap Singh
  * @author Mohan Singh
- * @author Jaskarn Singh Gill
+ * @author Jaskaran Singh Gill
  * @author Milandeep Singh
  */
 
