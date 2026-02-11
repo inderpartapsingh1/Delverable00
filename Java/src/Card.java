@@ -18,7 +18,16 @@
 public abstract class Card {
 
 
-    //default modifier for child classes
+    private String rank;
+    private String suit;
+
+    public String getRank() {
+        return "";
+    }
+
+    public String getSuit() {
+        return "";
+    }
 
     /**
      * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
