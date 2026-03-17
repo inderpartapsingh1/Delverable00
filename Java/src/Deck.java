@@ -23,25 +23,32 @@ import java.util.List;
  */
 public class Deck {
     
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     public void shuffle() {
-        // shuffle cards
+        Collections.shuffle(cards);
     }
 
     public Card dealCard() {
+        if (!cards.isEmpty()) {
+            return cards.remove(0);
+        }
         return null;
     }
 
     public boolean isEmpty() {
-        return false;
+        return cards.isEmpty();
     }
 
     public int size() {
-        return 0;
+        return cards.size();
     }
 
-}//end class
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+}
 
     
 

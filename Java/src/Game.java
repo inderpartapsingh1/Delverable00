@@ -20,33 +20,54 @@ import java.util.List;
  */
 public abstract class Game {
     
-    private List<Player> players;
-    private Deck deck;
-    private Player currentPlayer;
+     protected List<Player> players;
+    protected Deck deck;
+    protected Player currentPlayer;
 
     public void startGame() {
-        // start game
+        deck.shuffle();
+        for (Player p : players) {
+            for (int i = 0; i < 5; i++) { // deal 5 cards
+                p.drawCard(deck);
+            }
+        }
+        currentPlayer = players.get(0);
     }
 
     public void playTurn(Player player) {
-        // play one turn
+        String rank = player.chooseRankToAsk();
+        Player other = players.get(1); // simplification: always ask 2nd player
+        boolean gotCards = player.askForCard(rank, other);
+        if (!gotCards) {
+            player.drawCard(deck);
+        }
+        player.checkForBooks();
     }
 
     public boolean isGameOver() {
-        return false;
+        return deck.isEmpty();
     }
 
     public Player determineWinner() {
-        return null;
+        Player winner = players.get(0);
+        for (Player p : players) {
+            if (p.getBookCount() > winner.getBookCount()) {
+                winner = p;
+            }
+        }
+        return winner;
     }
 
     public void nextPlayer() {
-        // move to next player
+        int index = players.indexOf(currentPlayer);
+        currentPlayer = players.get((index + 1) % players.size());
     }
 
     public void displayScores() {
-        // show scores
+        for (Player p : players) {
+            System.out.println(p.getName() + " has " + p.getBookCount() + " books.");
+        }
     }
 
-}//end class
+}
 

@@ -14,17 +14,25 @@ import java.util.List;
  */
 public class Book {
     private String rank;
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
+
+    public Book(String rank) {
+        this.rank = rank;
+    }
 
     public void addCard(Card card) {
-        // add card to book
+        cards.add(card);
     }
 
     public boolean isComplete() {
-        return false;
+        return cards.size() == 4;
     }
 
     public String getRank() {
-        return "";
+        return rank;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

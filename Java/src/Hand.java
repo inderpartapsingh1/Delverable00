@@ -15,25 +15,38 @@ import java.util.List;
  * 
  */
 public class Hand {
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
-        // add card to hand
+        cards.add(card);
     }
 
     public void removeCard(Card card) {
-        // remove card from hand
+        cards.remove(card);
     }
 
     public boolean hasRank(String rank) {
+        for (Card c : cards) {
+            if (c.getRank().equals(rank)) return true;
+        }
         return false;
     }
 
     public List<Card> getCardsOfRank(String rank) {
-        return new ArrayList<>();
+        List<Card> matching = new ArrayList<>();
+        for (Card c : cards) {
+            if (c.getRank().equals(rank)) matching.add(c);
+        }
+        return matching;
     }
 
     public void showHand() {
-        // display hand
+        for (Card c : cards) {
+            System.out.println(c);
+        }
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

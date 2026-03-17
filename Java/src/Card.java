@@ -18,20 +18,22 @@
 public abstract class Card {
 
 
-    private String rank;
-    private String suit;
+    protected String rank;
+    protected String suit;
+
+    public Card(String rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
 
     public String getRank() {
-        return "";
+        return rank;
     }
 
     public String getSuit() {
-        return "";
+        return suit;
     }
 
-    /**
-     * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
-     */
     @Override
     public abstract String toString();
 

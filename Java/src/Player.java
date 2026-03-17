@@ -20,32 +20,69 @@ import java.util.List;
 public abstract class Player {
 
 
-    private String name;
-    private Hand hand;
-    private List<Book> books;
+    protected String name;
+    protected Hand hand = new Hand();
+    protected List<Book> books = new ArrayList<>();
+
+    public Player(String name) {
+        this.name = name;
+    }
 
     public void drawCard(Deck deck) {
-        // draw card from deck
+        Card c = deck.dealCard();
+        if (c != null) hand.addCard(c);
     }
 
     public boolean askForCard(String rank, Player otherPlayer) {
+        List<Card> taken = otherPlayer.hand.getCardsOfRank(rank);
+        if (!taken.isEmpty()) {
+            for (Card c : taken) {
+                otherPlayer.hand.removeCard(c);
+                hand.addCard(c);
+            }
+            return true;
+        }
         return false;
     }
 
     public List<Book> checkForBooks() {
-        return new ArrayList<>();
+        List<Book> newBooks = new ArrayList<>();
+        for (String r : new String[]{"A","2","3","4","5","6","7","8","9","10","J","Q","K"}) {
+            List<Card> cardsOfRank = hand.getCardsOfRank(r);
+            if (cardsOfRank.size() == 4) {
+                Book b = new Book(r);
+                for (Card c : cardsOfRank) {
+                    b.addCard(c);
+                    hand.removeCard(c);
+                }
+                books.add(b);
+                newBooks.add(b);
+            }
+        }
+        return newBooks;
     }
 
     public String chooseRankToAsk() {
-        return "";
+        if (!hand.getCards().isEmpty()) {
+            return hand.getCards().get(0).getRank(); // pick first card for simplicity
+        }
+        return null;
     }
 
     public void showHand() {
-        // show player hand
+        hand.showHand();
     }
 
     public boolean hasRank(String rank) {
-        return false;
+        return hand.hasRank(rank);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getBookCount() {
+        return books.size();
     }
 
 }
