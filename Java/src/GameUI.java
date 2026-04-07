@@ -15,29 +15,22 @@
  * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
  * game. Students wishing to add to the code should remember to add themselves as a modifier.
  */
-import java.util.*;
+import java.util.Scanner;
 
-public class Deck {
+public class GameUI {
 
-    private List<Card> cards = new ArrayList<>();
+    private Scanner sc = new Scanner(System.in);
 
-    public Deck() {
-        for (Card.Suit suit : Card.Suit.values()) {
-            for (Card.Rank rank : Card.Rank.values()) {
-                cards.add(new Card(rank, suit) {});
-            }
-        }
+    public String prompt(String message) {
+        System.out.print(message);
+        return sc.next();
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
+    public int getIntInput() {
+        return sc.nextInt();
     }
 
-    public Card dealCard() {
-        return cards.isEmpty() ? null : cards.remove(0);
-    }
-
-    public boolean isEmpty() {
-        return cards.isEmpty();
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 }

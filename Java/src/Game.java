@@ -7,67 +7,87 @@
  *
  * @author Inder Partap Singh
  * @author Mohan Singh
- * @author Jaskarn Singh Gill
+ * @author Jaskaran Singh Gill
  * @author Milandeep Singh
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * The class that models your game. create a more specific child of this class and instantiate the methods
- * given.
+ * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
+ * game. Students wishing to add to the code should remember to add themselves as a modifier.
  */
-public abstract class Game {
-    
-     protected List<Player> players;
-    protected Deck deck;
-    protected Player currentPlayer;
+import java.util.*;
+
+public class Game {
+
+    private List<Player> players = new ArrayList<>();
+    private Deck deck = new Deck();
+    private int currentIndex = 0;
+
+    private static final int INITIAL_CARDS = 5;
+
+    public void registerPlayers(GameUI ui) {
+
+        int num;
+        do {
+            num = ui.getIntInput();
+            if (num < 2 || num > 5)
+                ui.showMessage("Enter between 2 and 5 players:");
+        } while (num < 2 || num > 5);
+
+        for (int i = 0; i < num; i++) {
+            String name = ui.prompt("Enter player name: ");
+            players.add(new PlayerN(name));
+        }
+    }
 
     public void startGame() {
         deck.shuffle();
+
         for (Player p : players) {
-            for (int i = 0; i < 5; i++) { // deal 5 cards
+            for (int i = 0; i < INITIAL_CARDS; i++) {
                 p.drawCard(deck);
             }
         }
-        currentPlayer = players.get(0);
     }
 
-    public void playTurn(Player player) {
-        String rank = player.chooseRankToAsk();
-        Player other = players.get(1); // simplification: always ask 2nd player
-        boolean gotCards = player.askForCard(rank, other);
-        if (!gotCards) {
-            player.drawCard(deck);
-        }
-        player.checkForBooks();
-    }
+    public void playGame(GameUI ui) {
 
-    public boolean isGameOver() {
-        return deck.isEmpty();
-    }
+        while (!deck.isEmpty()) {
 
-    public Player determineWinner() {
-        Player winner = players.get(0);
-        for (Player p : players) {
-            if (p.getBookCount() > winner.getBookCount()) {
-                winner = p;
+            Player current = players.get(currentIndex);
+
+            ui.showMessage("\n--- " + current.getName() + "'s Turn ---");
+            current.showHand();
+
+            Card.Rank rank = current.chooseRank(ui);
+            Player target = current.chooseTarget(players, ui);
+
+            boolean success = current.askForCard(rank, target);
+
+            if (!success) {
+                ui.showMessage("Go Fish!");
+                current.drawCard(deck);
             }
+
+            current.checkForBooks();
+            nextPlayer();
         }
-        return winner;
+
+        displayWinner(ui);
     }
 
-    public void nextPlayer() {
-        int index = players.indexOf(currentPlayer);
-        currentPlayer = players.get((index + 1) % players.size());
+    private void nextPlayer() {
+        currentIndex = (currentIndex + 1) % players.size();
     }
 
-    public void displayScores() {
+    private void displayWinner(GameUI ui) {
+
+        Player winner = Collections.max(players, Comparator.comparingInt(Player::getBookCount));
+
+        ui.showMessage("\nWinner: " + winner.getName());
+
         for (Player p : players) {
-            System.out.println(p.getName() + " has " + p.getBookCount() + " books.");
+            ui.showMessage(p.getName() + ": " + p.getBookCount() + " books");
         }
     }
-
 }
-

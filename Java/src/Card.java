@@ -17,26 +17,22 @@
  */
 public abstract class Card {
 
+    public enum Rank {A, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, J, Q, K}
+    public enum Suit {HEARTS, DIAMONDS, CLUBS, SPADES}
 
-    protected String rank;
-    protected String suit;
+    protected Rank rank;
+    protected Suit suit;
 
-    public Card(String rank, String suit) {
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public String getRank() {
-        return rank;
-    }
-
-    public String getSuit() {
-        return suit;
-    }
+    public Rank getRank() { return rank; }
+    public Suit getSuit() { return suit; }
 
     @Override
-    public abstract String toString();
-
+    public String toString() {
+        return rank + " of " + suit;
+    }
 }
-    
-

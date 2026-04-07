@@ -3,36 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import java.util.List;
-
 /**
  *
  * @author Inder Partap Singh
  * @author Mohan Singh
- * @author Jaskarn Singh Gill
- * @author Milandeep Singh 
+ * @author Jaskaran Singh Gill
+ * @author Milandeep Singh
  */
+
+/**
+ * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
+ * game. Students wishing to add to the code should remember to add themselves as a modifier.
+ */
+import java.util.*;
+
 public class Book {
-    private String rank;
+
+    private Card.Rank rank;
     private List<Card> cards = new ArrayList<>();
 
-    public Book(String rank) {
+    public Book(Card.Rank rank) {
         this.rank = rank;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCards(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
-    public boolean isComplete() {
-        return cards.size() == 4;
-    }
-
-    public String getRank() {
+    public Card.Rank getRank() {
         return rank;
-    }
-
-    public List<Card> getCards() {
-        return cards;
     }
 }
